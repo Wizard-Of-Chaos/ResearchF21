@@ -13,6 +13,7 @@
 *.filters
 *.user
 *.wav
+*.sln
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
