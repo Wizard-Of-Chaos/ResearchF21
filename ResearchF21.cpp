@@ -10,7 +10,7 @@ AudioFile<double> createSineWave()
 {
     AudioFile<double> sineFile; //Can either be a double or a float
     sineFile.setNumChannels(2);
-    sineFile.setNumSamplesPerChannel((44100) * 10); 
+    sineFile.setNumSamplesPerChannel((44100) * 10); //10 seconds of sine wave
 
     const double sampleRate = 44100.0;
     const double frequencyHz = 440.0;
