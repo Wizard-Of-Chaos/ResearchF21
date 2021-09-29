@@ -6,7 +6,7 @@
 #include "AudioFile.h" //Uses the header file from github.com/adamstark/AudioFile
 
 
-AudioFile<double> createSineWave()
+AudioFile<double> createFreakWave()
 {
     AudioFile<double> sineFile; //Can either be a double or a float
     sineFile.setNumChannels(2);
@@ -18,7 +18,7 @@ AudioFile<double> createSineWave()
     for (int i = 0; i < sineFile.getNumSamplesPerChannel(); ++i) {
         for (int j = 0; j < sineFile.getNumChannels(); ++j) {
 
-            sineFile.samples[j][i] = sin((i / sampleRate) * frequencyHz * (double)2.0 * M_PI); //Writes the sine wave across the channels
+            sineFile.samples[j][i] = sin(tan((i / sampleRate) * frequencyHz * (double)2.0 * M_PI)); //Writes the sine wave across the channels
         }
     }
 
@@ -33,9 +33,9 @@ void scuff(AudioFile<double>& file) //Guaranteed to make any file sound like hot
 }
 int main()
 {
-    std::cout << "Generating a sine wave in a .wav file..." << std::endl;
-    std::string path = "sine.wav";
-    AudioFile<double> sine = createSineWave();
+    std::cout << "Generating a freaky-sounding wave in a .wav file..." << std::endl;
+    std::string path = "freak.wav";
+    AudioFile<double> sine = createFreakWave();
 
     sine.save(path, AudioFileFormat::Wave);
 
