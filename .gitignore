@@ -14,6 +14,7 @@
 *.user
 *.wav
 *.sln
+*.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -29,6 +30,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+.vscode/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
