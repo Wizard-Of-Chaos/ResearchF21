@@ -15,6 +15,7 @@
 *.wav
 *.sln
 *.json
+*.exe
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
