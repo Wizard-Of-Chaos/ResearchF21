@@ -4,7 +4,7 @@
 #include <cmath>
 #include <string>
 #include "AudioFile.h" //Uses the header file from github.com/adamstark/AudioFile
-
+#include "dftfuncs.h"
 
 AudioFile<double> createFreakWave()
 {
