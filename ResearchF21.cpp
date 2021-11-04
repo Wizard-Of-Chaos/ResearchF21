@@ -32,6 +32,15 @@ void scuff(AudioFile<double>& file) //Guaranteed to make any file sound like hot
     file.setSampleRate(22050);
 }
 
+void dftAudio(AudioFile<double>& file)
+{
+    std::cout << "Running DFT - this may take awhile" << std::endl;
+    std::vector<std::complex<double>> dftsamples = getDFT(file.samples[0]);
+    std::cout << "Acquired DFT from audio file. Probably. Putting them back now--" << std::endl;
+    file.samples[0] = getIDFT(dftsamples);
+    std::cout << "Replaced." << std::endl;
+}
+
 AudioFile<double> createRandWave()
 {
     AudioFile<double> randFile;
@@ -70,6 +79,12 @@ int main()
     AudioFile<double> randAudio = createRandWave();
     randAudio.save("rand.wav");
 
+    std::cout << "Running a DFT / IDFT on an audio file..." << std::endl;
+    AudioFile<double> blaster;
+    blaster.load("blast.wav");
+    blaster.printSummary();
+    dftAudio(blaster);
+    blaster.save("newblast.wav");
     return 0;
 }
 

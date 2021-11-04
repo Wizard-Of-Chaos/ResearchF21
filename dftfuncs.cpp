@@ -1,25 +1,50 @@
 #include "dftfuncs.h"
+#include <iostream>
 
-std::vector<std::complex<double>> getDFT(const std::vector<std::complex<double>> samples)
+using namespace std;
+
+vector<complex<double>> getDFT(vector<double> samples)
 {
-	std::vector<std::complex<double>> dft(samples.size());
-
-	std::complex<double> temp(0,0);
-
+	fftw_complex* in, * out;
+	fftw_plan p;
+	in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * samples.size());
+	out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * samples.size());
+	p = fftw_plan_dft_1d(samples.size(), in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 	for (int i = 0; i < samples.size(); ++i) {
-		for (int j = 0; j < samples.size(); ++j) {
-			temp = std::complex<double>((double(-1 * 2 * i * j) / (double)samples.size()), 0);
-			dft[i] += samples[j] * exp(IMAGINARY * PI * temp) / (double)samples.size();
-		}
+		in[i][0] = samples[i];
+		in[i][1] = 0;
+	} //loads array with samples
+	fftw_execute(p);
+
+	fftw_destroy_plan(p);
+	fftw_free(in);
+	vector<complex<double>> retval;
+	for (int i = 0; i < samples.size(); ++i) {
+		complex<double> temp(out[i][0], out[i][1]);
+		retval.push_back(temp);
 	}
-	return dft;
+	fftw_free(out);
+	return retval;
 }
 
-std::vector<std::complex<double>> samplesToComplex(const std::vector<double> samples)
+vector<double> getIDFT(vector<complex<double>> samples)
 {
-	std::vector<std::complex<double>> complex_samples;
-	for (double s : samples) {
-		complex_samples.push_back(std::complex<double>(s, 0));
+	fftw_complex* in, * out;
+	fftw_plan p;
+	in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * samples.size());
+	out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * samples.size());
+	p = fftw_plan_dft_1d(samples.size(), in, out, FFTW_BACKWARD, FFTW_ESTIMATE);
+	for (int i = 0; i < samples.size(); ++i) {
+		in[i][0] = samples[i].real();
+		in[i][1] = samples[i].imag();
 	}
-	return complex_samples;
+
+	fftw_execute(p);
+	fftw_destroy_plan(p);
+	fftw_free(in);
+	vector<double> retval;
+	for (int i = 0; i < samples.size(); ++i) {
+		retval.push_back(out[i][0]);
+	}
+	return retval;
 }
