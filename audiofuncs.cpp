@@ -109,7 +109,7 @@ vector<pair<int, double>> randomSamples(AudioFile<double> file)
 	int numsamples = file.getNumSamplesPerChannel();
 	vector<pair<int, double>> ret;
 	default_random_engine gen;
-	binomial_distribution<int> distribution(numsamples/2, .5);
+	binomial_distribution<int> distribution(numsamples, .5);
 	for (int i = 0; i < numsamples / 5; ++i) {
 		pair<int, double> temp;
 		int rando = distribution(gen);
